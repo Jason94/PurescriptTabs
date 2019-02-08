@@ -1,19 +1,30 @@
-module Component where
+module TabContainer where
 
 import Prelude
 
 import Data.Maybe (Maybe(..))
-
+import Data.String (joinWith)
 import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 
-data Query a = ToggleState a
+---
+--- Utils
+---
+
+style :: forall r i. Array String -> HH.IProp r i
+style styles = HH.attr (HH.AttrName "style") (joinWith ";" styles)
+
+---
+--- Component
+---
+
+data TabContainerQuery a = ToggleState a
 
 type State = { on :: Boolean }
 
-component :: forall m. H.Component HH.HTML Query Unit Void m
-component =
+tabContainer :: forall m. H.Component HH.HTML TabContainerQuery Unit Void m
+tabContainer =
   H.component
     { initialState: const initialState
     , render
@@ -25,7 +36,7 @@ component =
   initialState :: State
   initialState = { on: false }
 
-  render :: State -> H.ComponentHTML Query
+  render :: State -> H.ComponentHTML TabContainerQuery
   render state =
     HH.div_
       [ HH.h1_
@@ -41,7 +52,7 @@ component =
           ]
       ]
 
-  eval :: Query ~> H.ComponentDSL State Query Void m
+  eval :: TabContainerQuery ~> H.ComponentDSL State TabContainerQuery Void m
   eval = case _ of
     ToggleState next -> do
       _ <- H.modify (\state -> { on: not state.on })
