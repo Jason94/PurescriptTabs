@@ -10,4 +10,4 @@ import TabContainer (tabContainer)
 main :: Effect Unit
 main = HA.runHalogenAff do
   body <- HA.awaitBody
-  runUI tabContainer unit body
+  runUI (tabContainer ["One", "Two", "Three"]) unit body
