@@ -73,8 +73,7 @@ tabContainer tabData =
   render :: State -> H.ComponentHTML TabContainerQuery
   render state =
     HH.div_
-      [ HH.h1_ [ HH.text "Hello NY City" ]
-      , renderButtons state
+      [ renderButtons state
       , HH.fromPlainHTML state.tabDatum.html
       ]
 
